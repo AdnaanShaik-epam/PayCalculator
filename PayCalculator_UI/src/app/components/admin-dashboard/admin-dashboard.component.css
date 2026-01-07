@@ -23,6 +23,18 @@ table{width:100%}
 .calc label{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
 .calc input{padding:6px;border-radius:6px}
 
+/* New: change Calc Salary button color to green */
+.calc .small{
+  background: #10b981; /* emerald green */
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+.calc .small:hover{
+  background: #059669;
+}
+
 .salary-panel{margin-top:16px;padding:12px;border-radius:8px;background:linear-gradient(180deg,#ffffff,#fbfdff);border:1px solid #eef3ff}
 .salary-panel .row{margin-bottom:8px}
 .salary-panel h3{margin-top:0}
