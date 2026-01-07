@@ -1,0 +1,60 @@
+<h2>Admin Dashboard</h2>
+<div *ngIf="error" class="error" style="color:red">{{ error }}</div>
+<div class="admin-header">
+  <h2>Admin Dashboard</h2>
+  <div class="header-actions">
+    <button (click)="logout()" class="secondary">Logout</button>
+  </div>
+</div>
+
+<div class="card">
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Hourly Pay</th>
+          <th>Is Admin</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of employees">
+          <td>{{ e.employeeId }}</td>
+          <td>{{ e.fullName }}</td>
+          <td>{{ e.email }}</td>
+          <td class="pay-col">
+            <span *ngIf="editHourly[e.employeeId] === undefined">{{ e.hourlyPay | number:'1.2-2' }}</span>
+            <input *ngIf="editHourly[e.employeeId] !== undefined" type="number" [(ngModel)]="editHourly[e.employeeId]" />
+          </td>
+          <td>
+            <span class="badge" [class.admin]="e.isAdmin">{{ e.isAdmin ? 'Admin' : 'Employee' }}</span>
+          </td>
+          <td>
+            <div class="actions">
+              <button *ngIf="editHourly[e.employeeId] === undefined" (click)="startEdit(e)">Edit Pay</button>
+              <button *ngIf="editHourly[e.employeeId] !== undefined" (click)="saveHourly(e)">Save</button>
+              <button *ngIf="editHourly[e.employeeId] !== undefined" (click)="cancelEdit(e)" class="secondary small">Cancel</button>
+            </div>
+            <div class="calc">
+              <label>Start <input type="date" [(ngModel)]="periodStart" /></label>
+              <label>End <input type="date" [(ngModel)]="periodEnd" /></label>
+              <button class="small" (click)="calculate(e)">Calc Salary</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <aside *ngIf="salaryResult" class="salary-panel">
+    <h3>Salary Result</h3>
+    <div class="row"><strong>Employee:</strong> {{ salaryResult.employeeId }}</div>
+    <div class="row"><strong>Hourly:</strong> {{ salaryResult.hourlyPay | currency }}</div>
+    <div class="row"><strong>Hours:</strong> {{ salaryResult.totalWorkingHours }}</div>
+    <div class="row"><strong>Total:</strong> {{ salaryResult.calculatedSalary | currency }}</div>
+    <div class="row small">{{ salaryResult.periodStart | date }} - {{ salaryResult.periodEnd | date }}</div>
+  </aside>
+</div>

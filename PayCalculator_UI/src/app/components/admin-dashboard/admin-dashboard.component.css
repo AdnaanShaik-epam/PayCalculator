@@ -1,0 +1,36 @@
+table{width:100%}
+.table th{background:transparent}
+.table td input{width:100px}
+.card .form-row{display:flex;gap:8px;align-items:center}
+.salary-result{margin-top:16px;padding:12px;border-radius:6px;background:#f8fafc}
+
+/* Admin dashboard styles */
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.header-actions button{padding:6px 10px}
+
+.table-wrap{overflow:auto}
+.table{width:100%;border-collapse:collapse}
+.table th{background:transparent;text-align:left;padding:10px 8px;color:var(--muted);font-size:13px}
+.table td{padding:10px 8px;border-top:1px solid #eef2f7;vertical-align:middle}
+.pay-col input{width:110px}
+
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#eef2ff;color:var(--primary);font-weight:600}
+.badge.admin{background:#e8f5e9;color:#059669}
+
+.actions{display:flex;gap:8px;align-items:center}
+.actions button{padding:6px 8px}
+.calc{margin-top:8px;display:flex;gap:6px;align-items:center}
+.calc label{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+.calc input{padding:6px;border-radius:6px}
+
+.salary-panel{margin-top:16px;padding:12px;border-radius:8px;background:linear-gradient(180deg,#ffffff,#fbfdff);border:1px solid #eef3ff}
+.salary-panel .row{margin-bottom:8px}
+.salary-panel h3{margin-top:0}
+
+.small{font-size:12px;padding:6px 8px}
+.secondary{background:#6b7280}
+
+@media (max-width:880px){
+  .calc{flex-direction:column;align-items:flex-start}
+  .actions{flex-wrap:wrap}
+}

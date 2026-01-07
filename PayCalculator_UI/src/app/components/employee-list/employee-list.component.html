@@ -1,0 +1,19 @@
+<h3>Employees</h3>
+<ul>
+  <li *ngFor="let e of employees">{{ e.fullName }} ({{ e.email }})</li>
+</ul>
+
+<h4>Add Time Entry</h4>
+<div style="color:green">{{ message }}</div>
+<label>Employee:
+  <select [(ngModel)]="selectedEmployeeId">
+    <option [ngValue]="null">-- Select --</option>
+    <option *ngFor="let e of employees" [ngValue]="e.employeeId">{{ e.fullName }}</option>
+  </select>
+</label>
+<br />
+<label>Login Time: <input type="datetime-local" [(ngModel)]="loginTime" /></label>
+<br />
+<label>Logout Time: <input type="datetime-local" [(ngModel)]="logoutTime" /></label>
+<br />
+<button (click)="submitTime()">Submit</button>

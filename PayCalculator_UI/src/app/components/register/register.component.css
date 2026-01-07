@@ -1,0 +1,4 @@
+.login-form{max-width:480px;margin:0 auto}
+.form-row{margin-bottom:12px}
+.error{color:var(--danger);margin-bottom:8px}
+button{width:100%}

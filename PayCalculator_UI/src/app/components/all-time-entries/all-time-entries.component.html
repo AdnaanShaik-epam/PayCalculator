@@ -1,0 +1,28 @@
+<div class="all-time-entries">
+  <h2>All Time Entries</h2>
+  <div class="form-row">
+    <label>Start Date</label>
+    <input type="date" [(ngModel)]="periodStart" />
+    <label>End Date</label>
+    <input type="date" [(ngModel)]="periodEnd" />
+    <button (click)="load()">Load</button>
+  </div>
+
+  <div *ngIf="error" style="color:red">{{ error }}</div>
+
+  <table class="table" *ngIf="entries?.length">
+    <thead>
+      <tr><th>TimeEntryId</th><th>Employee</th><th>Login</th><th>Logout</th></tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of entries">
+        <td>{{ t.timeEntryId }}</td>
+        <td>{{ t.employeeName }} ({{ t.employeeId }})</td>
+        <td>{{ t.loginTime | date:'short' }}</td>
+        <td>{{ t.logoutTime | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="entries?.length === 0" class="small">No entries found</div>
+</div>
