@@ -58,12 +58,19 @@ namespace PayCalculator.Services
             return _mapper.Map<IEnumerable<TimeEntryDto>>(entries);
         }
 
-        public async Task<IEnumerable<TimeEntryWithEmployeeDto>> GetTimeEntriesForPeriodAsync(DateTime periodStart, DateTime periodEnd)
+        public async Task<IEnumerable<TimeEntryWithEmployeeDto>> GetTimeEntriesForPeriodAsync(DateTime periodStart, DateTime periodEnd, int? employeeId = null)
         {
-            var entries = await _context.TimeEntries
+            var query = _context.TimeEntries
                 .Where(te => te.LoginTime >= periodStart && te.LogoutTime <= periodEnd)
                 .Include(te => te.Employee)
-                .ToListAsync();
+                .AsQueryable();
+
+            if (employeeId.HasValue)
+            {
+                query = query.Where(te => te.EmployeeId == employeeId.Value);
+            }
+
+            var entries = await query.ToListAsync();
 
             var result = entries.Select(te => new TimeEntryWithEmployeeDto
             {

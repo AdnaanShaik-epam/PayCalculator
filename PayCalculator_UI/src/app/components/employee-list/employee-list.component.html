@@ -6,14 +6,14 @@
 <h4>Add Time Entry</h4>
 <div style="color:green">{{ message }}</div>
 <label>Employee:
-  <select [(ngModel)]="selectedEmployeeId">
+  <select [(ngModel)]="selectedEmployeeId" [disabled]="!isAdmin">
     <option [ngValue]="null">-- Select --</option>
     <option *ngFor="let e of employees" [ngValue]="e.employeeId">{{ e.fullName }}</option>
   </select>
 </label>
 <br />
-<label>Login Time: <input type="datetime-local" [(ngModel)]="loginTime" /></label>
+<label>Login Time: <input type="datetime-local" [(ngModel)]="loginTime" [min]="minDateTime" [max]="maxDateTime" /></label>
 <br />
-<label>Logout Time: <input type="datetime-local" [(ngModel)]="logoutTime" /></label>
+<label>Logout Time: <input type="datetime-local" [(ngModel)]="logoutTime" [min]="minDateTime" [max]="maxDateTime" /></label>
 <br />
 <button (click)="submitTime()">Submit</button>

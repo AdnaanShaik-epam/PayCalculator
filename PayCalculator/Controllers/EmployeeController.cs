@@ -42,6 +42,33 @@ namespace PayCalculator.Controllers
         [HttpPost("time-entry")]
         public async Task<IActionResult> AddTimeEntry([FromBody] TimeEntryDto dto)
         {
+            // determine if caller is admin
+            var isAdmin = User.Claims.FirstOrDefault(c => c.Type == "isAdmin")?.Value == "True";
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "id")?.Value;
+            int.TryParse(userIdClaim, out var callerId);
+
+            if (!isAdmin)
+            {
+                // Override employee id to caller to prevent forging
+                dto.EmployeeId = callerId;
+
+                // non-admins can only add entries for themselves (now enforced)
+                if (dto.EmployeeId != callerId)
+                    return Forbid();
+
+                // disallow entries not on current day (server local date)
+                var now = DateTime.Now;
+                if (dto.LoginTime.Date != now.Date || dto.LogoutTime.Date != now.Date)
+                    return BadRequest("Employees can only add time entries for the current day.");
+
+                // disallow future times (both must be <= now)
+                if (dto.LoginTime > now || dto.LogoutTime > now)
+                    return BadRequest("Cannot add entries with future times.");
+
+                if (dto.LogoutTime <= dto.LoginTime)
+                    return BadRequest("Logout must be after login.");
+            }
+
             var timeEntry = _mapper.Map<TimeEntry>(dto);
             await _employeeService.AddTimeEntryAsync(timeEntry);
             return Ok();

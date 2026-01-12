@@ -10,6 +10,7 @@ namespace PayCalculator.Services
         Task AddTimeEntryAsync(TimeEntry timeEntry);
         Task AddBreakEntryAsync(BreakEntry breakEntry);
         Task<decimal> CalculateWorkingHoursAsync(int employeeId, DateTime periodStart, DateTime periodEnd);
-        Task<IEnumerable<TimeEntryWithEmployeeDto>> GetTimeEntriesForPeriodAsync(DateTime periodStart, DateTime periodEnd);
+        // Allow optional employee filter
+        Task<IEnumerable<TimeEntryWithEmployeeDto>> GetTimeEntriesForPeriodAsync(DateTime periodStart, DateTime periodEnd, int? employeeId = null);
     }
 }

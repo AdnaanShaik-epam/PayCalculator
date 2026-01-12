@@ -1,10 +1,18 @@
 <div class="all-time-entries">
   <h2>All Time Entries</h2>
   <div class="form-row">
-    <label>Start Date</label>
-    <input type="date" [(ngModel)]="periodStart" />
-    <label>End Date</label>
-    <input type="date" [(ngModel)]="periodEnd" />
+    <label>Employee
+      <select [(ngModel)]="selectedEmployeeId">
+        <option [ngValue]="null">All</option>
+        <option *ngFor="let e of employees" [ngValue]="e.employeeId">{{ e.fullName }}</option>
+      </select>
+    </label>
+    <label>Start Date
+      <input type="date" [(ngModel)]="periodStart" />
+    </label>
+    <label>End Date
+      <input type="date" [(ngModel)]="periodEnd" />
+    </label>
     <button (click)="load()">Load</button>
   </div>
 

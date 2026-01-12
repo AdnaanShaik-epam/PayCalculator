@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
@@ -7,6 +7,10 @@ export class ApiService {
 
   getEmployees() {
     return this.http.get<any[]>('https://localhost:7089/api/Admin/employees');
+  }
+
+  getEmployee(employeeId: number) {
+    return this.http.get<any>(`https://localhost:7089/api/Employee/${employeeId}`);
   }
 
   setHourlyPay(employeeId: number, hourlyPay: number) {
@@ -27,7 +31,9 @@ export class ApiService {
   }
 
   // Admin: get all time entries in a date range
-  getAllTimeEntries(periodStart: string, periodEnd: string) {
-    return this.http.get<any[]>('https://localhost:7089/api/Admin/time-entries', { params: { periodStart, periodEnd } });
+  getAllTimeEntries(periodStart: string, periodEnd: string, employeeId?: number) {
+    let params = new HttpParams().set('periodStart', periodStart).set('periodEnd', periodEnd);
+    if (employeeId != null) params = params.set('employeeId', employeeId.toString());
+    return this.http.get<any[]>('https://localhost:7089/api/Admin/time-entries', { params });
   }
 }

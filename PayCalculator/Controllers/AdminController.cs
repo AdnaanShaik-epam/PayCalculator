@@ -49,10 +49,10 @@ namespace PayCalculator.Controllers
         }
 
         [HttpGet("time-entries")]
-        public async Task<IActionResult> GetTimeEntriesForPeriod([FromQuery] DateTime periodStart, [FromQuery] DateTime periodEnd)
+        public async Task<IActionResult> GetTimeEntriesForPeriod([FromQuery] DateTime periodStart, [FromQuery] DateTime periodEnd, [FromQuery] int? employeeId)
         {
             if (!IsAdmin()) return Forbid();
-            var entries = await _employeeService.GetTimeEntriesForPeriodAsync(periodStart, periodEnd);
+            var entries = await _employeeService.GetTimeEntriesForPeriodAsync(periodStart, periodEnd, employeeId);
             return Ok(entries);
         }
     }
